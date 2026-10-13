@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deelyt App – Unisex Fashion | Clothes, Heels & Bags</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo" onclick="showPage('home')">
+        <svg class="logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="20" width="40" height="36" rx="4" stroke="#fff" stroke-width="3"/>
+          <path d="M20 20 V14 C20 8 26 4 32 4 C38 4 44 8 44 14 V20" stroke="#fff" stroke-width="3" fill="none"/>
+          <circle cx="32" cy="38" r="6" fill="#FFD700"/>
+        </svg>
+        <span class="logo-text">DEELYT</span>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search clothes, heels, bags..." onkeyup="filterProducts()" />
+        <i class="fas fa-search"></i>
+      </div>
+
+      <nav class="nav">
+        <a href="#" onclick="showPage('home')" class="nav-link active" data-page="home">Home</a>
+        <a href="#" onclick="showPage('shop')" class="nav-link" data-page="shop">Shop</a>
+        <a href="#" onclick="showPage('categories')" class="nav-link" data-page="categories">Categories</a>
+        <a href="#" onclick="showPage('chat')" class="nav-link" data-page="chat"><i class="fas fa-comments"></i> Chat</a>
+        <a href="#" onclick="toggleCart()" class="nav-link cart-btn">
+          <i class="fas fa-shopping-bag"></i>
+          <span id="cartCount" class="badge">0</span>
+        </a>
+        <a href="#" onclick="showPage('account')" class="nav-link" id="accountBtn"><i class="fas fa-user"></i> Account</a>
+      </nav>
+
+      <button class="menu-toggle" onclick="toggleMobileNav()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#" onclick="showPage('home'); toggleMobileNav()">Home</a>
+    <a href="#" onclick="showPage('shop'); toggleMobileNav()">Shop</a>
+    <a href="#" onclick="showPage('categories'); toggleMobileNav()">Categories</a>
+    <a href="#" onclick="showPage('chat'); toggleMobileNav()">Chat</a>
+    <a href="#" onclick="toggleCart(); toggleMobileNav()">Cart</a>
+    <a href="#" onclick="showPage('account'); toggleMobileNav()">Account</a>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- HOME PAGE -->
+    <section id="home" class="page active">
+      <div class="hero">
+        <div class="hero-content">
+          <h1>DEELYT</h1>
+          <p class="tagline">Unisex Fashion • Clothes • Heels • Bags</p>
+          <p class="hero-sub">Nationwide Delivery in Nigeria 🚚 within 7 Days</p>
+          <button class="btn-gold" onclick="showPage('shop')">Shop Now</button>
+        </div>
+      </div>
+
+      <div class="container section">
+        <h2 class="section-title">Featured Collections</h2>
+        <div class="category-cards">
+          <div class="cat-card" onclick="filterByCategory('clothes')">
+            <div class="cat-icon"><i class="fas fa-tshirt"></i></div>
+            <h3>Clothes</h3>
+            <p>Unisex Streetwear & Essentials</p>
+          </div>
+          <div class="cat-card" onclick="filterByCategory('heels')">
+            <div class="cat-icon"><i class="fas fa-shoe-prints"></i></div>
+            <h3>Heels</h3>
+            <p>Bold Statement Footwear</p>
+          </div>
+          <div class="cat-card" onclick="filterByCategory('bags')">
+            <div class="cat-icon"><i class="fas fa-shopping-bag"></i></div>
+            <h3>Bags</h3>
+            <p>Premium Handbags & Backpacks</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container section">
+        <h2 class="section-title">Trending Now</h2>
+        <div class="product-grid" id="trendingProducts"></div>
+      </div>
+
+      <div class="delivery-banner">
+        <div class="container">
+          <i class="fas fa-truck"></i>
+          <div>
+            <strong>Nationwide Delivery Across Nigeria</strong>
+            <p>All orders delivered within 7 days. Pay securely via Bank Transfer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP PAGE -->
+    <section id="shop" class="page">
+      <div class="container section">
+        <div class="shop-header">
+          <h2 class="section-title">All Products</h2>
+          <div class="filters">
+            <select id="categoryFilter" onchange="filterProducts()">
+              <option value="all">All Categories</option>
+              <option value="clothes">Clothes</option>
+              <option value="heels">Heels</option>
+              <option value="bags">Bags</option>
+            </select>
+            <select id="sortFilter" onchange="filterProducts()">
+              <option value="default">Sort By</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name">Name A-Z</option>
+            </select>
+          </div>
+        </div>
+        <div class="product-grid" id="allProducts"></div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES PAGE -->
+    <section id="categories" class="page">
+      <div class="container section">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="category-cards large">
+          <div class="cat-card" onclick="filterByCategory('clothes')">
+            <div class="cat-icon"><i class="fas fa-tshirt"></i></div>
+            <h3>Clothes</h3>
+            <p>Hoodies, Tees, Pants, Jackets – Unisex styles for everyone</p>
+            <button class="btn-outline">Explore</button>
+          </div>
+          <div class="cat-card" onclick="filterByCategory('heels')">
+            <div class="cat-icon"><i class="fas fa-shoe-prints"></i></div>
+            <h3>Heels</h3>
+            <p>Stilettos, Block Heels, Platforms – Bold & confident</p>
+            <button class="btn-outline">Explore</button>
+          </div>
+          <div class="cat-card" onclick="filterByCategory('bags')">
+            <div class="cat-icon"><i class="fas fa-shopping-bag"></i></div>
+            <h3>Bags</h3>
+            <p>Tote, Crossbody, Backpacks – Everyday luxury</p>
+            <button class="btn-outline">Explore</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAT PAGE -->
+    <section id="chat" class="page">
+      <div class="container section">
+        <h2 class="section-title">Buyer ↔ Seller Chat</h2>
+        <p class="chat-note">Chat securely with verified sellers. Only verified sellers appear here.</p>
+        <div class="chat-layout">
+          <div class="chat-sidebar">
+            <h4>Conversations</h4>
+            <div class="chat-list" id="chatList">
+              <div class="chat-item active" onclick="selectChat(this, 'Seller A – Lagos')">
+                <div class="chat-avatar">SA</div>
+                <div>
+                  <strong>Seller A – Lagos</strong>
+                  <small>Verified ✓</small>
+                </div>
+              </div>
+              <div class="chat-item" onclick="selectChat(this, 'Seller B – Abuja')">
+                <div class="chat-avatar">SB</div>
+                <div>
+                  <strong>Seller B – Abuja</strong>
+                  <small>Verified ✓</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-main">
+            <div class="chat-header" id="chatHeader">Seller A – Lagos <span class="verified">Verified ✓</span></div>
+            <div class="chat-messages" id="chatMessages">
+              <div class="msg received">Hello! How can I help you today?</div>
+              <div class="msg sent">Hi, is the black tote bag still available in size Medium?</div>
+              <div class="msg received">Yes it is! Ready to ship within 24hrs.</div>
+            </div>
+            <div class="chat-input-area">
+              <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="if(event.key==='Enter') sendMessage()" />
+              <button class="btn-gold" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCOUNT PAGE -->
+    <section id="account" class="page">
+      <div class="container section">
+        <div id="authSection">
+          <div class="auth-tabs">
+            <button class="tab active" onclick="switchAuth('login')">Login</button>
+            <button class="tab" onclick="switchAuth('signup')">Sign Up</button>
+          </div>
+
+          <!-- LOGIN -->
+          <div id="loginForm" class="auth-form">
+            <h2>Welcome Back</h2>
+            <input type="email" id="loginEmail" placeholder="Email" />
+            <input type="password" id="loginPassword" placeholder="Password" />
+            <button class="btn-gold full" onclick="login()">Login</button>
+            <p class="auth-switch">New here? <a href="#" onclick="switchAuth('signup')">Create an account</a></p>
+          </div>
+
+          <!-- SIGNUP -->
+          <div id="signupForm" class="auth-form hidden">
+            <h2>Join Deelyt</h2>
+            <input type="text" id="signupName" placeholder="Full Name" />
+            <input type="email" id="signupEmail" placeholder="Email" />
+            <input type="password" id="signupPassword" placeholder="Password" />
+            <input type="tel" id="signupPhone" placeholder="Phone (Nigeria)" />
+            <label class="checkbox">
+              <input type="checkbox" id="isSeller" /> I want to sell on Deelyt
+            </label>
+            <p class="seller-note">⚠️ Sellers must be verified by the App Creator before listing products.</p>
+            <button class="btn-gold full" onclick="signup()">Create Account</button>
+            <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuth('login')">Login</a></p>
+          </div>
+        </div>
+
+        <!-- LOGGED IN VIEW -->
+        <div id="userDashboard" class="hidden">
+          <h2>My Account</h2>
+          <div class="user-info">
+            <p><strong>Name:</strong> <span id="userName"></span></p>
+            <p><strong>Email:</strong> <span id="userEmail"></span></p>
+            <p><strong>Role:</strong> <span id="userRole"></span></p>
+            <p id="sellerStatus" class="hidden"><strong>Seller Status:</strong> <span class="pending">Pending Verification by Creator</span></p>
+          </div>
+          <button class="btn-outline" onclick="logout()">Logout</button>
+          <button class="btn-gold" onclick="showPage('shop')">Continue Shopping</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div class="modal" id="productModal">
+      <div class="modal-content product-detail">
+        <button class="close-btn" onclick="closeModal('productModal')">&times;</button>
+        <div class="detail-grid">
+          <div class="detail-image">
+            <img id="detailImg" src="" alt="" />
+          </div>
+          <div class="detail-info">
+            <h2 id="detailName"></h2>
+            <p class="detail-price" id="detailPrice"></p>
+            <p class="detail-seller">Seller: <span id="detailSeller"></span> <span class="verified">Verified ✓</span></p>
+            <p id="detailDesc"></p>
+            <div class="size-selector" id="sizeSelector"></div>
+            <div class="qty-selector">
+              <button onclick="changeQty(-1)">−</button>
+              <span id="qtyValue">1</span>
+              <button onclick="changeQty(1)">+</button>
+            </div>
+            <button class="btn-gold full" onclick="addToCartFromDetail()">Add to Bag</button>
+            <button class="btn-outline full" onclick="openChatFromProduct()">Chat with Seller</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <aside class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h3>Your Bag</h3>
+        <button onclick="toggleCart()">&times;</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Total</span>
+          <strong id="cartTotal">₦0</strong>
+        </div>
+        <button class="btn-gold full" onclick="openCheckout()">Checkout</button>
+      </div>
+    </aside>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="modal" id="checkoutModal">
+      <div class="modal-content checkout">
+        <button class="close-btn" onclick="closeModal('checkoutModal')">&times;</button>
+        <h2>Secure Checkout</h2>
+        <p class="secure-note"><i class="fas fa-shield-alt"></i> Pay via Bank Transfer – No scams. Funds only released after delivery confirmation.</p>
+        
+        <div class="checkout-summary" id="checkoutSummary"></div>
+
+        <h3>Delivery Address (Nigeria)</h3>
+        <input type="text" id="delName" placeholder="Full Name" />
+        <input type="tel" id="delPhone" placeholder="Phone Number" />
+        <input type="text" id="delAddress" placeholder="Street Address" />
+        <input type="text" id="delCity" placeholder="City" />
+        <select id="delState">
+          <option value="">Select State</option>
+          <option>Lagos</option><option>Abuja (FCT)</option><option>Rivers</option>
+          <option>Kano</option><option>Oyo</option><option>Delta</option>
+          <option>Kaduna</option><option>Enugu</option><option>Anambra</option>
+          <option>Ogun</option><option>Other</option>
+        </select>
+
+        <h3>Bank Transfer Details</h3>
+        <div class="bank-box">
+          <p><strong>Bank:</strong> Guaranty Trust Bank (GTB)</p>
+          <p><strong>Account Name:</strong> Deelyt Marketplace Ltd</p>
+          <p><strong>Account Number:</strong> 0123456789</p>
+          <p><strong>Amount:</strong> <span id="transferAmount">₦0</span></p>
+          <p class="copy-note">Transfer the exact amount and upload proof below.</p>
+        </div>
+
+        <label class="file-upload">
+          <input type="file" id="paymentProof" accept="image/*,.pdf" />
+          <span><i class="fas fa-upload"></i> Upload Payment Proof</span>
+        </label>
+
+        <p class="delivery-info">🚚 Delivery: Nationwide Nigeria – within 7 days after payment confirmation.</p>
+
+        <button class="btn-gold full" onclick="placeOrder()">Place Order</button>
+      </div>
+    </div>
+
+    <!-- ORDER SUCCESS -->
+    <div class="modal" id="successModal">
+      <div class="modal-content success">
+        <i class="fas fa-check-circle"></i>
+        <h2>Order Placed!</h2>
+        <p>Thank you for shopping on Deelyt.</p>
+        <p>Your order will be delivered within <strong>7 days</strong> anywhere in Nigeria.</p>
+        <p>Order ID: <strong id="orderId"></strong></p>
+        <button class="btn-gold" onclick="closeModal('successModal'); showPage('home')">Continue Shopping</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="logo small">
+          <svg class="logo-icon" viewBox="0 0 64 64" fill="none"><rect x="12" y="20" width="40" height="36" rx="4" stroke="#FFD700" stroke-width="3"/><path d="M20 20 V14 C20 8 26 4 32 4 C38 4 44 8 44 14 V20" stroke="#FFD700" stroke-width="3" fill="none"/><circle cx="32" cy="38" r="6" fill="#FFD700"/></svg>
+          <span>DEELYT</span>
+        </div>
+        <p>Unisex fashion marketplace for Clothes, Heels & Bags.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <a href="#" onclick="showPage('shop')">Shop</a>
+        <a href="#" onclick="showPage('categories')">Categories</a>
+        <a href="#" onclick="showPage('chat')">Chat</a>
+        <a href="#" onclick="showPage('account')">Account</a>
+      </div>
+      <div>
+        <h4>Delivery</h4>
+        <p>🚚 Nationwide Nigeria</p>
+        <p>Within 7 Days</p>
+        <p>Pay via Bank Transfer (Naira)</p>
+      </div>
+      <div>
+        <h4>Seller Info</h4>
+        <p>All sellers are verified by the App Creator before they can list products.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Deelyt App. All rights reserved. Made for Nigeria 🇳🇬</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
